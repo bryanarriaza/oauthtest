@@ -4,7 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
@@ -20,8 +22,15 @@ public class ResourceServer {
         SpringApplication.run(ResourceServer.class, args);
     }
 
-    @RequestMapping("/")
+    private String message = "Hello world!";
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public Map<String, String> home() {
-        return Collections.singletonMap("message", "Hello World");
+        return Collections.singletonMap("message", message);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public void updateMessage(@RequestBody String message) {
+        this.message = message;
     }
 }
