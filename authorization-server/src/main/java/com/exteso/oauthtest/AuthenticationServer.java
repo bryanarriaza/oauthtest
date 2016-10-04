@@ -76,6 +76,12 @@ public class AuthenticationServer {
     }
 
     @Configuration
-    public static class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+        @Override
+        @Bean
+        public AuthenticationManager authenticationManagerBean() throws Exception {
+            return super.authenticationManagerBean();
+        }
     }
 }

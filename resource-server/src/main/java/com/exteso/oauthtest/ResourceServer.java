@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -19,6 +21,8 @@ import java.util.Map;
 @SpringBootApplication
 @RestController
 @EnableOAuth2Sso
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableResourceServer
 public class ResourceServer {
 
     public static void main(String[] args) {
@@ -27,6 +31,7 @@ public class ResourceServer {
 
     private String message = "Hello world!";
 
+    @PreAuthorize("#oauth2.hasScope('resource-server-read')")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Map<String, Object> home() {
         Map<String, Object> m = new HashMap<>();
@@ -34,20 +39,9 @@ public class ResourceServer {
         return m;
     }
 
+    @PreAuthorize("#oauth2.hasScope('resource-server-write')")
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public void updateMessage(@RequestBody String message) {
         this.message = message;
-    }
-
-    @EnableResourceServer
-    @Configuration
-    public static class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .mvcMatchers(HttpMethod.GET, "/").access("#oauth2.hasScope('resource-server-read')")
-                    .mvcMatchers(HttpMethod.POST, "/").access("#oauth2.hasScope('resource-server-write')");
-        }
     }
 }
