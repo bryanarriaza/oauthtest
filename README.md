@@ -30,4 +30,4 @@ copy jwt.jks in authorization-server/src/main/resources/jwk.jks
 Notes:
 
  - Resource server fetch the pubkey of the authentication server, so in production it must be over a secure channel :)
- - If the authentication server is down, and a resource server is launched, the fetch of the public key will fail silently, see https://github.com/spring-projects/spring-security-oauth/issues/734 issue
+ - If the authentication server is down, and a resource server is launched, the fetch of the public key will fail (but a log message will be written), see https://github.com/spring-projects/spring-security-oauth/issues/734 issue
