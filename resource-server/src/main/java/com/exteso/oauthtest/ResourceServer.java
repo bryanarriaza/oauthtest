@@ -40,8 +40,7 @@ public class ResourceServer {
 
     @RequestMapping(value = "/scoped", method = RequestMethod.GET)
     public Map<String, String> scoped() {
-        //due to a limitation of Spring OAuth2, scopes are not copied from /user endpoint
-        return Collections.singletonMap("message", "This message is visible only for OAuth client with the correct scope");
+        return Collections.singletonMap("message", "Hello OAuth2 world!");
     }
 
     @Configuration
