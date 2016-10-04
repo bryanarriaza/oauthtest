@@ -1,10 +1,5 @@
 logging:
   level:
     org.springframework.security: DEBUG
-
-security:
-  oauth2:
-    resource:
-      userInfoUri: http://localhost:8080/user
 server:
   port: 9090
