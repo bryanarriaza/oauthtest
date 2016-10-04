@@ -1,0 +1,12 @@
+security:
+  oauth2:
+    client:
+      client-id: resource-server
+      client-secret: resource-server-secret
+      scope: resource-server-read,resource-server-write
+      auto-approve-scopes: '.*'
+logging:
+  level:
+    org.springframework.security: DEBUG
+server:
+  port: 8080
