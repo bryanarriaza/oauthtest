@@ -57,14 +57,11 @@ public class AuthenticationServer {
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients.inMemory()
                     .withClient("resource-server")
-                    .authorizedGrantTypes("client_credentials")
-                    .authorities("ROLE_ONE")
-                    .secret("resource-server-secret")
-                    .scopes("resource-server-read", "resource-server-write")
-                    .and()
-                    .withClient("resource-server-read-only")
-                    .secret("resource-server-secret")
-                    .scopes("resource-server-read");
+                        .secret("resource-server-secret")
+                        .authorizedGrantTypes("client_credentials")
+                        .scopes("resource-server-read", "resource-server-write")
+                        .authorities("ROLE_RS_READ", "ROLE_RS_WRITE");
+
         }
     }
 }

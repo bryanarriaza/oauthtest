@@ -38,14 +38,20 @@ public class ResourceServer {
         this.message = message;
     }
 
+    @RequestMapping(value = "/scoped", method = RequestMethod.GET)
+    public Map<String, String> scoped() {
+        //due to a limitation of Spring OAuth2, scopes are not copied from /user endpoint
+        return Collections.singletonMap("message", "This message is visible only for OAuth client with the correct scope");
+    }
+
     @Configuration
     public static class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/").access("hasRole('ROLE_ONE')");
-            //http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/").access("#oauth2.hasScope('resource-server-read')");
-            http.authorizeRequests().mvcMatchers(HttpMethod.POST, "/").access("#oauth2.hasScope('resource-server-write')");
+            http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/").access("hasRole('ROLE_RS_READ')");
+            http.authorizeRequests().mvcMatchers(HttpMethod.POST, "/").access("hasRole('ROLE_RS_WRITE')");
+            http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/scoped").access("#oauth2.hasScope('resource-server-read')");
         }
     }
 }
