@@ -2,9 +2,12 @@ package com.exteso.oauthtest.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -29,6 +32,9 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private Environment environment;
+
     @Bean
     public TokenStore tokenStore() {
         return new JwtTokenStore(jwtTokenEnhancer());
@@ -36,8 +42,8 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
-        //note the hardcoded secret key, FIXME move outside
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "mySecretKey".toCharArray());
+        String pwd = environment.getProperty("keystore.password");
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), pwd.toCharArray());
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
         return converter;
