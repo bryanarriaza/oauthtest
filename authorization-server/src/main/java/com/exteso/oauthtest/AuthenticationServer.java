@@ -37,11 +37,6 @@ public class AuthenticationServer {
         SpringApplication.run(AuthenticationServer.class, args);
     }
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        return user;
-    }
-
     @Configuration
     @EnableAuthorizationServer
     public static class OAuth2Config extends AuthorizationServerConfigurerAdapter {
