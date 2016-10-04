@@ -1,5 +1,7 @@
 package com.exteso.oauthtest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -25,9 +28,15 @@ public class AuthenticationServer {
     public static void main(String[] args) {
         SpringApplication.run(AuthenticationServer.class, args);
     }
+    private static final Log logger = LogFactory.getLog(AuthenticationServer.class);
+
+    private AtomicInteger count = new AtomicInteger(0);
 
     @RequestMapping("/user")
     public Principal user(Principal user) {
+        logger.info("AS /user has ben called");
+        logger.debug("/user called "+ count.incrementAndGet() +" times");
+        logger.debug("user info: "+user.toString());
         return user;
     }
 
@@ -48,12 +57,13 @@ public class AuthenticationServer {
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients.inMemory()
                     .withClient("resource-server")
+                    .authorizedGrantTypes("client_credentials")
                     .secret("resource-server-secret")
-                    .scopes("resource-server-read", "resource-server-write").autoApprove(true)
+                    .scopes("resource-server-read", "resource-server-write")
                     .and()
                     .withClient("resource-server-read-only")
                     .secret("resource-server-secret")
-                    .scopes("resource-server-read").autoApprove(true);
+                    .scopes("resource-server-read");
         }
     }
 }

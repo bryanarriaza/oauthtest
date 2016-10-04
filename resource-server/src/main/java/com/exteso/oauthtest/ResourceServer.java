@@ -43,7 +43,7 @@ public class ResourceServer {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/").access("#oauth2.hasScope('resource-server-read')");
+            //http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/").access("#oauth2.hasScope('resource-server-read')");
             http.authorizeRequests().mvcMatchers(HttpMethod.POST, "/").access("#oauth2.hasScope('resource-server-write')");
         }
     }
