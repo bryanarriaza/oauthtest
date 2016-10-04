@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -30,9 +31,8 @@ import java.security.Principal;
  *
  */
 @SpringBootApplication
-@RestController
-@EnableResourceServer
 public class AuthenticationServer {
+
     public static void main(String[] args) {
         SpringApplication.run(AuthenticationServer.class, args);
     }
@@ -76,6 +76,11 @@ public class AuthenticationServer {
                     .secret("resource-server-secret")
                     .scopes("resource-server-read").autoApprove(true);
         }
+
+        @Override
+        public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+            security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+        }
     }
 
     @Configuration
@@ -83,13 +88,12 @@ public class AuthenticationServer {
 
         @Override
         @Bean
-        public AuthenticationManager    authenticationManagerBean() throws Exception {
+        public AuthenticationManager authenticationManagerBean() throws Exception {
             return super.authenticationManagerBean();
         }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.csrf().disable();
         }
 
         @Override
