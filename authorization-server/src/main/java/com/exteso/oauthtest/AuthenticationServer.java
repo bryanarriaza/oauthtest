@@ -58,6 +58,7 @@ public class AuthenticationServer {
             clients.inMemory()
                     .withClient("resource-server")
                     .authorizedGrantTypes("client_credentials")
+                    .authorities("ROLE_ONE")
                     .secret("resource-server-secret")
                     .scopes("resource-server-read", "resource-server-write")
                     .and()
