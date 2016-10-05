@@ -36,7 +36,7 @@ public class App  {
 
     @RequestMapping(value = "/secured/")
     public void secured(HttpServletResponse res) throws IOException {
-        res.sendRedirect("/secured/index.html");
+        res.sendRedirect("/secured/index.html");//FIXME find a better way...
     }
 
     @RequestMapping(value = "/api/message", method = RequestMethod.GET)
