@@ -30,12 +30,9 @@ public class AuthenticationServer {
     }
     private static final Log logger = LogFactory.getLog(AuthenticationServer.class);
 
-    private AtomicInteger count = new AtomicInteger(0);
-
     @RequestMapping("/user")
     public Principal user(Principal user) {
-        logger.info("AS /user has ben called");
-        logger.debug("/user called "+ count.incrementAndGet() +" times");
+        logger.info("AS /user has been called");
         logger.debug("user info: "+user.toString());
         return user;
     }

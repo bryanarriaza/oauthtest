@@ -24,11 +24,11 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("resource-server")
-                .secret("resource-server-secret")
+                .withClient("service-account-1")
+                .secret("service-account-1-secret")
                 .authorizedGrantTypes("client_credentials")
                 .scopes("resource-server-read", "resource-server-write")
-                .authorities("ROLE_RS_READ", "ROLE_RS_WRITE");
+                .authorities("ROLE_RS_READ");
 
     }
 }
