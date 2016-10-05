@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.AccessTokenRequest;
 import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.security.oauth2.common.AuthenticationScheme;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,15 +59,12 @@ public class App {
     public static class OauthClientConfiguration {
         @Bean
         protected OAuth2ProtectedResourceDetails resource() {
-            ResourceOwnerPasswordResourceDetails resource = new ResourceOwnerPasswordResourceDetails();
+            ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
+
 
             resource.setAccessTokenUri("http://localhost:8080/oauth/token");
             resource.setClientId("client-server-s2s");
             resource.setClientSecret("client-server-s2s-secret");
-            resource.setScope(Collections.singletonList("resource-server-read"));
-
-
-            resource.setClientAuthenticationScheme(AuthenticationScheme.header);
 
             return resource;
         }
