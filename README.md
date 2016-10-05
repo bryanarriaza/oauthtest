@@ -19,6 +19,9 @@ How to test:
 4. Access the resource with: $ `curl -H "Authorization: Bearer $TOKEN" -v localhost:9090`
 5. Update the resource with: $ `curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -X POST -d "Bonjour" -v localhost:9090`
 
+6. $ `cd client-server;mvn spring-boot:run`
+7. go to localhost:9999/secured , it will redirect to localhost:8080, enter "user" and "password"
+
 
 For generating your own key (as written in the stytex.de blog):
 

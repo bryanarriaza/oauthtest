@@ -65,6 +65,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .scopes("resource-server-read").autoApprove(true)
                 .and()
                 .withClient("client-server-u2s") // user to server
+                .authorizedGrantTypes("authorization_code", "refresh_token", "password")
                 .secret("client-server-u2s-secret")
                 .scopes("resource-server-write");
     }
