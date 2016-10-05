@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 @SpringBootApplication
@@ -31,7 +34,10 @@ public class App  {
     }
 
 
-
+    @RequestMapping(value = "/secured/")
+    public void secured(HttpServletResponse res) throws IOException {
+        res.sendRedirect("/secured/index.html");
+    }
 
     @RequestMapping(value = "/api/message", method = RequestMethod.GET)
     public Map<String, String> getMessage() {

@@ -1,3 +1,5 @@
+server.contextPath: /auth
+
 logging:
   level:
     org.springframework.security: DEBUG

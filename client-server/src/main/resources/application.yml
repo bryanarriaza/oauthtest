@@ -13,10 +13,10 @@ security:
     password: none
   oauth2:
     client:
-      accessTokenUri: http://localhost:8080/oauth/token
-      userAuthorizationUri: http://localhost:8080/oauth/authorize
+      accessTokenUri: http://localhost:8080/auth/oauth/token
+      userAuthorizationUri: http://localhost:8080/auth/oauth/authorize
       clientId: client-server-u2s
       clientSecret: client-server-u2s-secret
     resource:
       jwt:
-        key-uri: http://localhost:8080/oauth/token_key
+        key-uri: http://localhost:8080/auth/oauth/token_key

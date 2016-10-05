@@ -15,7 +15,7 @@ How to test:
 1. $ `cd authorization-server;mvn spring-boot:run`
 2. $ `cd resource-server;mvn spring-boot:run`
 
-3. Obtain token with: $ `curl resource-server:resource-server-secret@localhost:8080/oauth/token -d grant_type=client_credentials` and save it in TOKEN=.......
+3. Obtain token with: $ `curl resource-server:resource-server-secret@localhost:8080/auth/oauth/token -d grant_type=client_credentials` and save it in TOKEN=.......
 4. Access the resource with: $ `curl -H "Authorization: Bearer $TOKEN" -v localhost:9090`
 5. Update the resource with: $ `curl -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" -X POST -d "Bonjour" -v localhost:9090`
 

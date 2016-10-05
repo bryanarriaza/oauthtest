@@ -2,7 +2,7 @@ security:
   oauth2:
     resource:
       jwt:
-        keyUri: http://localhost:8080/oauth/token_key
+        keyUri: http://localhost:8080/auth/oauth/token_key
 logging:
   level:
     org.springframework.security: DEBUG
