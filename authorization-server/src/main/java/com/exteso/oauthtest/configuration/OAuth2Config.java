@@ -57,22 +57,11 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("resource-server")
-                .secret("resource-server-secret")
-                .scopes("resource-server-read", "resource-server-write").autoApprove(true)
-                .and()
-                .withClient("resource-server-read-only")
-                .secret("resource-server-secret")
-                .scopes("resource-server-read").autoApprove(true)
-                .and()
-                .withClient("client-server-s2s") //account for server to server communication
-                .secret("client-server-s2s-secret")
-                .scopes("resource-server-read").autoApprove(true)
-                .and()
-                .withClient("client-server-u2s") // user to server
-                .authorizedGrantTypes("authorization_code", "refresh_token", "password")
-                .secret("client-server-u2s-secret")
-                .scopes("resource-server-write").autoApprove(true);
+                .withClient("service-account-1")
+                .secret("service-account-1-secret")
+                .authorizedGrantTypes("client_credentials")
+                .scopes("resource-server-read", "resource-server-write")
+                .authorities("ROLE_RS_READ");
     }
 
 
