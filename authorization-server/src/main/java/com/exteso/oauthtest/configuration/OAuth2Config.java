@@ -29,7 +29,6 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     }
 
     @Autowired
-    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -63,7 +62,11 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .and()
                 .withClient("client-server-s2s") //account for server to server communication
                 .secret("client-server-s2s-secret")
-                .scopes("resource-server-read").autoApprove(true);
+                .scopes("resource-server-read").autoApprove(true)
+                .and()
+                .withClient("client-server-u2s") // user to server
+                .secret("client-server-u2s-secret")
+                .scopes("resource-server-write");
     }
 
     @Override

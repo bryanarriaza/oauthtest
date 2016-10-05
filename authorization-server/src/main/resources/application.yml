@@ -6,3 +6,6 @@ server:
 
 keystore:
   password: mySecretKey
+
+
+security.user.password: password
