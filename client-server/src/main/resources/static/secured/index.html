@@ -4,7 +4,29 @@
         <title>My application</title>
     </head>
     <body>
-        <h1>Secured Hello world!</h1>
+        <h1>Secured Page</h1>
+
+
+        <button onclick="loadMessage()">Load message</button>
+        <div>Message is: <span id="message"></span></div>
+
+
+        <div><button onclick="submitNewMessage()">Submit message</button></div>
+        <input type="text" id="messageToSubmit">
+
+        <script>
+
+            function loadMessage() {
+                fetch('/api/message')
+                    .then(r => r.json())
+                    .then(json => document.getElementById("message").textContent = json.message)
+            }
+
+            function submitNewMessage() {
+                fetch('/api/message', {method: 'POST', body: JSON.stringify(document.getElementById("messageToSubmit").value), credentials: 'same-origin', headers: new Headers({'X-Requested-With':'XMLHttpRequest', 'Content-Type': 'application/json'})})
+            }
+
+        </script>
     </body>
 
 </html>
