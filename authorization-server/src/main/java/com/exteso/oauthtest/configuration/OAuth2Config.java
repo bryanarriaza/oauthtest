@@ -23,16 +23,21 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 @EnableAuthorizationServer
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).authenticationManager(authenticationManager);
-    }
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private Environment environment;
+
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).authenticationManager(authenticationManager);
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+    }
 
     @Bean
     public TokenStore tokenStore() {
@@ -67,11 +72,8 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .withClient("client-server-u2s") // user to server
                 .authorizedGrantTypes("authorization_code", "refresh_token", "password")
                 .secret("client-server-u2s-secret")
-                .scopes("resource-server-write");
+                .scopes("resource-server-write").autoApprove(true);
     }
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
-    }
+
 }
