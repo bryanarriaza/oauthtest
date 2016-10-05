@@ -59,6 +59,10 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .and()
                 .withClient("resource-server-read-only")
                 .secret("resource-server-secret")
+                .scopes("resource-server-read").autoApprove(true)
+                .and()
+                .withClient("client-server-s2s") //account for server to server communication
+                .secret("client-server-s2s-secret")
                 .scopes("resource-server-read").autoApprove(true);
     }
 
