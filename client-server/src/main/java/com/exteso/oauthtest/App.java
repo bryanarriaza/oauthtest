@@ -59,9 +59,11 @@ public class App {
     public static class OauthClientConfiguration {
         @Bean
         protected OAuth2ProtectedResourceDetails resource() {
+
+            //we use client credential, as this use case does not need to act on behalf the user
             ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
 
-
+            //FIXME remove hardcoded data :)
             resource.setAccessTokenUri("http://localhost:8080/oauth/token");
             resource.setClientId("client-server-s2s");
             resource.setClientSecret("client-server-s2s-secret");
