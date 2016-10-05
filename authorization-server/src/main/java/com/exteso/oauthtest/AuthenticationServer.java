@@ -40,28 +40,5 @@ public class AuthenticationServer {
         return user;
     }
 
-    @Configuration
-    @EnableAuthorizationServer
-    public static class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
-        @Autowired
-        private AuthenticationManager authenticationManager;
-
-        @Override
-        public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-            endpoints.authenticationManager(authenticationManager);
-        }
-
-
-        @Override
-        public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-            clients.inMemory()
-                    .withClient("resource-server")
-                        .secret("resource-server-secret")
-                        .authorizedGrantTypes("client_credentials")
-                        .scopes("resource-server-read", "resource-server-write")
-                        .authorities("ROLE_RS_READ", "ROLE_RS_WRITE");
-
-        }
-    }
 }
