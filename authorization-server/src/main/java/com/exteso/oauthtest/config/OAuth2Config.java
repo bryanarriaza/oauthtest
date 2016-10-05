@@ -27,8 +27,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .withClient("resource-server")
                 .secret("resource-server-secret")
                 .authorizedGrantTypes("client_credentials")
-                .scopes("resource-server-read", "resource-server-write")
-                .authorities("ROLE_RS_READ", "ROLE_RS_WRITE");
+                .scopes("resource-server-read", "resource-server-write");
 
     }
 }
