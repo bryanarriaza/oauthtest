@@ -6,13 +6,11 @@
     <body>
         <h1>Unsecured page</h1>
 
-        <p><a href="secured/">Login</a></p>
-
         <button onclick="loadMessage()">Load message</button>
         <div>Message is: <span id="message"></span></div>
 
 
-        <div><button onclick="submitNewMessage()">Submit message</button> (this will fail if you are not authenticated)</div>
+        <div><button onclick="submitNewMessage()">Submit message</button></div>
         <input type="text" id="messageToSubmit">
 
         <script>
