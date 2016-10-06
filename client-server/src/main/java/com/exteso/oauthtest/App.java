@@ -3,6 +3,7 @@ package com.exteso.oauthtest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
@@ -41,20 +42,16 @@ public class App  {
     @Configuration
     public static class OauthClientConfiguration {
 
+        @Bean
+        @ConfigurationProperties("resourceServerClient")
+        public ClientCredentialsResourceDetails getClientCredentialsResourceDetails() {
+            return new ClientCredentialsResourceDetails();
+        }
 
         @Bean
         public OAuth2RestTemplate restTemplate() {
-
-            //we use client credential, as this use case does not need to act on behalf the user
-            ClientCredentialsResourceDetails resource = new ClientCredentialsResourceDetails();
-
-            //FIXME remove hardcoded data :)
-            resource.setAccessTokenUri("http://localhost:8080/auth/oauth/token");
-            resource.setClientId("service-account-1");
-            resource.setClientSecret("service-account-1-secret");
-
             AccessTokenRequest atr = new DefaultAccessTokenRequest();
-            return new OAuth2RestTemplate(resource, new DefaultOAuth2ClientContext(atr));
+            return new OAuth2RestTemplate(getClientCredentialsResourceDetails(), new DefaultOAuth2ClientContext(atr));
         }
 
 
