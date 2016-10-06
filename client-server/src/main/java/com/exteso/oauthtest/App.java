@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
@@ -30,17 +31,11 @@ import java.util.Map;
 public class App  {
 
     @Autowired
-    @Qualifier("forServer")
     private OAuth2RestTemplate forServer;
-
-    @Autowired
-    @Qualifier("forUser")
-    private OAuth2RestTemplate forUser;
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
-
 
     @RequestMapping(value = "/secured/")
     public void secured(HttpServletResponse res) throws IOException {
@@ -54,14 +49,13 @@ public class App  {
 
     @RequestMapping(value = "/api/message", method = RequestMethod.POST)
     public void saveMessage(@RequestBody String newMessage) {
-        forUser.postForLocation("http://localhost:9090", newMessage);
+        forServer.postForLocation("http://localhost:9090", newMessage);
     }
 
     @Configuration
     public static class OauthClientConfiguration {
 
 
-        @Qualifier("forServer")
         @Bean
         public OAuth2RestTemplate restTemplate() {
 
@@ -70,17 +64,13 @@ public class App  {
 
             //FIXME remove hardcoded data :)
             resource.setAccessTokenUri("http://localhost:8080/auth/oauth/token");
-            resource.setClientId("client-server-s2s");
-            resource.setClientSecret("client-server-s2s-secret");
+            resource.setClientId("service-account-1");
+            resource.setClientSecret("service-account-1-secret");
 
             AccessTokenRequest atr = new DefaultAccessTokenRequest();
             return new OAuth2RestTemplate(resource, new DefaultOAuth2ClientContext(atr));
         }
 
-        @Qualifier("forUser")
-        @Bean
-        public OAuth2RestTemplate oauth2RestTemplate(OAuth2ProtectedResourceDetails resource, OAuth2ClientContext context) {
-            return new OAuth2RestTemplate(resource, context);
-        }
+
     }
 }
