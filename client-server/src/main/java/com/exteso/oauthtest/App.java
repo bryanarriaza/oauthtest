@@ -20,7 +20,7 @@ import java.util.Map;
 
 @SpringBootApplication
 @RestController
-public class App  {
+public class App {
 
     @Autowired
     private OAuth2RestTemplate forServer;

@@ -23,12 +23,13 @@ public class AuthenticationServer {
     public static void main(String[] args) {
         SpringApplication.run(AuthenticationServer.class, args);
     }
+
     private static final Log logger = LogFactory.getLog(AuthenticationServer.class);
 
     @RequestMapping("/user")
     public Principal user(Principal user) {
         logger.info("AS /user has been called");
-        logger.debug("user info: "+user.toString());
+        logger.debug("user info: " + user.toString());
         return user;
     }
 
