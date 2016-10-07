@@ -20,3 +20,8 @@ security:
     resource:
       jwt:
         key-uri: http://localhost:8080/auth/oauth/token_key
+
+resourceServerClient:
+  accessTokenUri: http://localhost:8080/auth/oauth/token
+  clientId: client-server-s2s
+  clientSecret: client-server-s2s-secret
