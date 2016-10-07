@@ -28,6 +28,7 @@ public class AuthenticationServer {
     public static void main(String[] args) {
         SpringApplication.run(AuthenticationServer.class, args);
     }
+
     private static final Log logger = LogFactory.getLog(AuthenticationServer.class);
 
     private AtomicInteger count = new AtomicInteger(0);
@@ -35,8 +36,8 @@ public class AuthenticationServer {
     @RequestMapping("/user")
     public Principal user(Principal user) {
         logger.info("AS /user has ben called");
-        logger.debug("/user called "+ count.incrementAndGet() +" times");
-        logger.debug("user info: "+user.toString());
+        logger.debug("/user called " + count.incrementAndGet() + " times");
+        logger.debug("user info: " + user.toString());
         return user;
     }
 
@@ -57,10 +58,10 @@ public class AuthenticationServer {
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients.inMemory()
                     .withClient("resource-server")
-                        .secret("resource-server-secret")
-                        .authorizedGrantTypes("client_credentials")
-                        .scopes("resource-server-read", "resource-server-write")
-                        .authorities("ROLE_RS_READ", "ROLE_RS_WRITE");
+                    .secret("resource-server-secret")
+                    .authorizedGrantTypes("client_credentials")
+                    .scopes("resource-server-read", "resource-server-write")
+                    .authorities("ROLE_RS_READ", "ROLE_RS_WRITE");
 
         }
     }
