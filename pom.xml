@@ -18,6 +18,5 @@
   <modules>
     <module>authorization-server</module>
     <module>resource-server</module>
-    <module>client-server</module>
   </modules>
 </project>
