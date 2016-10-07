@@ -2,7 +2,6 @@ package com.exteso.oauthtest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,7 +39,7 @@ public class ResourceServer {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Map<String, String> user(Principal user) {
-        return Collections.singletonMap("message", "user is: "+user.toString());
+        return Collections.singletonMap("message", "user is: " + user.toString());
     }
 
     @Configuration
