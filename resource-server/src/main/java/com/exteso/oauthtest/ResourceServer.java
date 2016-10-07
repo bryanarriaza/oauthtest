@@ -41,7 +41,7 @@ public class ResourceServer {
     @PreAuthorize("#oauth2.hasScope('resource-server-read')")
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Map<String, String> user(Principal user) {
-        return Collections.singletonMap("message", "user is: "+user.toString());
+        return Collections.singletonMap("message", "user is: " + user.toString());
     }
 
 }
